@@ -13,32 +13,31 @@ License:        GPLv3+ and ASL 2.0
 URL:            https://github.com/Tarptaeya/PDFReader
 Source0:        %{url}/tarball/%{gitcommit_full}
 
-BuildRequires:  gcc-c++
 BuildRequires:  cmake
 BuildRequires:  extra-cmake-modules
 BuildRequires:  qt5-qtbase-devel
 
-Requires:       falkon
+Requires:       falkon%{?_isa} >= 3.1.0
 
 %description
 %{summary}.
 
 %prep
 %autosetup -n Tarptaeya-PDFReader-%{gitcommit}
+mv pdfreader/pdfjs/LICENSE LICENSE_pdfjs
 
 
 %build
-mkdir build
-pushd build
+mkdir %{_target_platform}
+pushd %{_target_platform}
     %cmake_kf5 ..
 popd
 
 
 %install
-pushd build
+pushd %{_target_platform}
     %make_install
 popd
-mv pdfreader/pdfjs/LICENSE LICENSE_pdfjs
 
 
 %files
